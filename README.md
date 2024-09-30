@@ -1,15 +1,13 @@
 # 일상 대화 요약 Baseline
 본 리포지토리는 '2024년 국립국어원 인공지능의 한국어 능력 평가' 경진 대회 과제 중 '일상 대화 요약'에 대한 베이스라인 모델의 학습과 평가를 재현하기 위한 코드를 포함하고 있습니다.  
 
-학습, 추론의 실행 방법(How to Run)은 아래에서 확인하실 수 있습니다.   
-
-|Model|Evaluation Score|ROUGE-1|bertscore|bluert|
-|:---|---|---|---|---|
-|MLP-KTLim/llama-3-Korean-Bllossom-8B (without SFT)|54.276|44.592|73.277|44.958|
-|MLP-KTLim/llama-3-Korean-Bllossom-8B (with SFT)|58.982|54.759|79.154|43.035|
-
 ## 리포지토리 구조 (Repository Structure)
 ```
+
+# 학습에 사용한 Prompt
+datafolder
+└── txt 파일
+
 # 학습에 필요한 리소스들을 보관하는 디렉토리
 resource
 └── data
@@ -18,6 +16,9 @@ resource
 run
 ├── test.py
 └── train.py
+├── test_adapter_s.py
+└── train_adapter_s.py
+
 
 # 학습에 사용될 커스텀 함수들을 보관하는 디렉토리
 src
