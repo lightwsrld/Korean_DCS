@@ -34,9 +34,30 @@ def main(args):
         args.tokenizer = args.model_id
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
     tokenizer.pad_token = tokenizer.eos_token
+    
+    # 증강 없이 데이터셋 불러오기
+    train_file_names=["resource/data/일상대화요약_train.json"]
+    valid_file_names=["resource/data/일상대화요약_train.json"]
+    train_dataset = CustomDataset(train_file_names, tokenizer, pt=(0, 0.8))
+    valid_dataset = CustomDataset(train_file_names, tokenizer, pt=(0.8, 1))
 
-    train_dataset = CustomDataset("resource/data/일상대화요약_train.json", tokenizer)
-    valid_dataset = CustomDataset("resource/data/일상대화요약_dev.json", tokenizer)
+    '''
+    train_file_names=["resource/data/일상대화요약_train_speaker1.json", "resource/data/일상대화요약_train_speaker2.json"]
+    dev_file_names=["resource/data/일상대화요약_dev_speaker1.json", "resource/data/일상대화요약_dev_speaker2.json"]
+    train_dataset = CustomDataset(train_file_names, tokenizer)
+    valid_dataset = CustomDataset(dev_file_names, tokenizer)
+
+
+    train_list = ["resource/data/일상대화요약_train.json", "test/augmented_data_2.json"]
+    dev_list = ["resource/data/일상대화요약_dev.json"]
+    train_dataset = CustomDataset(train_list, tokenizer)
+    valid_dataset = CustomDataset(dev_list, tokenizer)
+    
+    train_file_names=["resource/data/일상대화요약_train.json", "resource/data/augmented_data_2.json"]
+    dev_file_names=["resource/data/일상대화요약_dev.json"]
+    train_dataset = CustomDataset(train_file_names, tokenizer)
+    valid_dataset = CustomDataset(dev_file_names, tokenizer)
+    '''
 
     train_dataset = Dataset.from_dict({
         'input_ids': train_dataset.inp,
@@ -66,6 +87,7 @@ def main(args):
         log_level="info",
         logging_steps=1,
         save_strategy="epoch",
+        load_best_model_at_end = True,
         save_total_limit=5,
         bf16=True,
         gradient_checkpointing=True,

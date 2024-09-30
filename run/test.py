@@ -39,7 +39,7 @@ def main(args):
         tokenizer.convert_tokens_to_ids("<|eot_id|>")
     ]
 
-    dataset = CustomDataset("resource/data/일상대화요약_test.json", tokenizer)
+    dataset = CustomDataset(["resource/data/일상대화요약_test.json"], tokenizer)
 
     with open("resource/data/일상대화요약_test.json", "r") as f:
         result = json.load(f)
